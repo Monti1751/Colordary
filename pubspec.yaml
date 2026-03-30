@@ -1,0 +1,56 @@
+name: colordary
+description: A cozy personal diary app with emotional tracking.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  flutter_riverpod: ^2.5.1
+  sqflite: ^2.3.0
+  path: ^1.9.0
+  
+  intl: 0.20.2
+  dartz: ^0.10.1
+  equatable: ^2.0.5
+  fl_chart: ^1.2.0
+  flutter_local_notifications: ^21.0.0
+  timezone: ^0.11.0
+  flutter_timezone: ^5.0.2
+  shared_preferences: ^2.2.2
+  google_fonts: ^8.0.2
+  
+  # Nuevas de seguridad y utilidades
+  local_auth: ^2.3.0
+  share_plus: ^12.0.1
+  state_notifier: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.4.8
+  
+  # Testing y Estilos
+  mockito: ^5.4.4
+  flutter_native_splash: ^2.3.9
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: false
+  image_path: "assets/app_icon.png"
+  min_sdk_android: 21
+
+# flutter_native_splash config moved to flutter_native_splash.yaml
