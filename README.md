@@ -348,5 +348,3 @@ Found a bug or have a feature request? Please open an [issue on GitHub](https://
 ---
 
 **Enjoy journaling with Colordary! 💝**
-#   C o l o r d a r y  
- 
