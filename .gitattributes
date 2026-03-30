@@ -1,0 +1,25 @@
+# Normalize line endings to CRLF (Windows)
+* text=auto
+
+# Code files
+*.dart eol=crlf
+*.kt eol=crlf
+*.java eol=crlf
+*.yaml eol=crlf
+*.yml eol=crlf
+*.json eol=crlf
+*.md eol=crlf
+*.sh eol=lf
+*.gradle eol=crlf
+*.xml eol=crlf
+*.properties eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.apk binary
+*.jar binary
+*.ttf binary
+*.otf binary
