@@ -43,6 +43,8 @@
   "biometricReason": "Schützen Sie Ihren täglichen Rückzugsort durch Identitätsprüfung",
   "authFailed": "Authentifizierung fehlgeschlagen",
   "notifPermissionDenied": "Benachrichtigungsberechtigung abgelehnt",
+  "notificationTest": "Testbenachrichtigung senden",
+  "notificationTestSent": "Testbenachrichtigung gesendet",
   "textPreview": "Textvorschau",
   "exportDate": "Datum",
   "exportEmotion": "Registrierte Emotion",
@@ -57,5 +59,6 @@
   "closeMonthLabel": "Monat schließen",
   "historyTitle": "Kumulierter Verlauf",
   "historyNoData": "Noch keine historischen Zusammenfassungen.",
-  "historyTotalEvents": "Registrierte Ereignisse insgesamt: {count}"
+  "historyTotalEvents": "Registrierte Ereignisse insgesamt: {count}",
+  "diaryReminderMessage": "Vergessen Sie nicht, Ihr Tagebuch zu führen"
 }

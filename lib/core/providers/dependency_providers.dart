@@ -84,10 +84,12 @@ final diaryNotifierProvider = StateNotifierProvider<DiaryNotifier, DiaryState>((
   final getUseCase = ref.watch(getMonthlyEntriesUseCaseProvider);
   final saveUseCase = ref.watch(saveDailyEntryUseCaseProvider);
   final notifications = ref.watch(notificationServiceProvider);
+  final settingsRepository = ref.watch(settingsRepositoryProvider) as SettingsRepositoryImpl;
   return DiaryNotifier(
     getMonthlyEntriesUseCase: getUseCase,
     saveDailyEntryUseCase: saveUseCase,
     notificationService: notifications,
+    settingsRepository: settingsRepository,
   );
 });
 

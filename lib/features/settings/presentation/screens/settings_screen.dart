@@ -272,7 +272,7 @@ class SettingsScreen extends ConsumerWidget {
                       onChanged: (val) => settingsNotifier.toggleNotifications(
                         val,
                         loc.appTitle,
-                        loc.dailyEntryHint,
+                        loc.diaryReminderMessage,
                         context,
                       ),
                       secondary: Icon(Icons.notifications_active_rounded, color: theme.colorScheme.primary),

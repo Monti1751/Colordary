@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:state_notifier/state_notifier.dart';
 import '../../../../core/enums/emotion.dart';
 import '../../../../core/services/notification_service.dart';
+import '../../../../features/settings/data/repositories/settings_repository_impl.dart';
 import '../../domain/usecases/get_monthly_entries_usecase.dart';
 import '../../domain/usecases/save_daily_entry_usecase.dart';
 import '../../domain/entities/daily_entry.dart';
@@ -11,14 +12,17 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   final GetMonthlyEntriesUseCase _getMonthlyEntriesUseCase;
   final SaveDailyEntryUseCase _saveDailyEntryUseCase;
   final NotificationService _notificationService;
+  final SettingsRepositoryImpl _settingsRepository;
 
   DiaryNotifier({
     required GetMonthlyEntriesUseCase getMonthlyEntriesUseCase,
     required SaveDailyEntryUseCase saveDailyEntryUseCase,
     required NotificationService notificationService,
+    required SettingsRepositoryImpl settingsRepository,
   })  : _getMonthlyEntriesUseCase = getMonthlyEntriesUseCase,
         _saveDailyEntryUseCase = saveDailyEntryUseCase,
         _notificationService = notificationService,
+        _settingsRepository = settingsRepository,
         super(const DiaryState()) {
     final now = DateTime.now();
     loadMonth(now.year, now.month);
@@ -46,12 +50,14 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
         final now = DateTime.now();
         if (date.year == now.year && date.month == now.month && date.day == now.day) {
           // El usuario ha rellenado su diario HOY.
-          // En lugar de enviarle un aviso de "Rellena tu diario a las 21:00h" hoy,
-          // posponemos su próximo recordatorio para MAÑANA y lo mantenemos activo repitiendose.
-          _notificationService.scheduleDailyReminder(
-             title: "Tu Refugio Diario", 
-             body: "¿Cómo te has sentido hoy?",
-             forceTomorrow: true,
+          // Reprogramamos la notificación para mañana utilizando el método que verifica si está vacío
+          final languageCode = _settingsRepository.getLanguageCode();
+          
+          // Esto cancelará la notificación de hoy porque el diario ya tiene entrada,
+          // y la programará para mañana
+          _notificationService.scheduleDailyReminderIfEmpty(
+            languageCode: languageCode,
+            forceTomorrow: true,
           );
         }
       },

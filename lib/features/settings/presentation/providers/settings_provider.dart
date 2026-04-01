@@ -64,6 +64,17 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
   Future<void> updateLocale(Locale locale) async {
     await _updateSettingsUseCase(languageCode: locale.languageCode);
     state = state.copyWith(locale: locale);
+    
+    // Reprogramar la notificación con el nuevo idioma si está habilitada
+    if (state.isNotificationsEnabled) {
+      try {
+        await _notificationService.scheduleDailyReminderIfEmpty(
+          languageCode: locale.languageCode,
+        );
+      } catch (e) {
+        debugPrint('Error reprogramando notificación con nuevo idioma: $e');
+      }
+    }
   }
 
   Future<void> updateColorBlindMode(bool isEnabled) async {
@@ -76,7 +87,12 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
       if (isEnabled) {
         final granted = await _notificationService.requestPermissions();
         if (granted) {
-          await _notificationService.scheduleDailyReminder(title: targetTitle, body: targetBody);
+          // Obtener el idioma actual para la notificación
+          final langCode = state.locale?.languageCode ?? _repository.getLanguageCode() ?? 'es';
+          
+          await _notificationService.scheduleDailyReminderIfEmpty(
+            languageCode: langCode,
+          );
           await _updateSettingsUseCase(isNotificationsEnabled: true);
           state = state.copyWith(isNotificationsEnabled: true);
         } else {
@@ -120,6 +136,17 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     } else {
       await _updateSettingsUseCase(isAuthEnabled: false);
       state = state.copyWith(isAuthEnabled: false);
+    }
+  }
+
+  /// Envía una notificación de prueba para verificar que el sistema funciona
+  Future<void> sendTestNotification() async {
+    try {
+      final langCode = state.locale?.languageCode ?? _repository.getLanguageCode() ?? 'es';
+      await _notificationService.sendTestNotification(languageCode: langCode);
+    } catch (e) {
+      debugPrint('Error sending test notification: $e');
+      rethrow;
     }
   }
 

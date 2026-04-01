@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:colordary/l10n/app_localizations.dart';
 import '../../../../core/constants/app_dimensions.dart';
 import '../../../../core/providers/dependency_providers.dart';
+import '../../../../core/services/notification_messages.dart';
 
 class AuthWrapper extends ConsumerStatefulWidget {
   final Widget child;
@@ -20,6 +21,24 @@ class _AuthWrapperState extends ConsumerState<AuthWrapper> {
   void initState() {
     super.initState();
     _checkAuth();
+    _scheduleNotificationIfRequired();
+  }
+
+  Future<void> _scheduleNotificationIfRequired() async {
+    final settingsRepo = ref.read(settingsRepositoryProvider);
+    final isNotificationsEnabled = settingsRepo.getNotificationsEnabled();
+    
+    if (isNotificationsEnabled) {
+      final notificationService = ref.read(notificationServiceProvider);
+      final languageCode = settingsRepo.getLanguageCode();
+      final reminderMessage = NotificationMessages.getDiaryReminderMessage(languageCode);
+      
+      // Reschedule the notification to ensure it's still active after app restart
+      await notificationService.scheduleDailyReminder(
+        title: "Colordary",
+        body: reminderMessage,
+      );
+    }
   }
 
   Future<void> _checkAuth() async {

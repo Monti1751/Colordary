@@ -8,8 +8,13 @@ A cozy personal diary application with emotional tracking, built with Flutter. C
 - **Diary Management**: Create, read, update, and delete diary entries with timestamps and emotion tags
 - **Analytics Dashboard**: Visualize your emotional patterns with interactive charts and statistics
 - **Local Authentication**: Secure your diary with fingerprint or face recognition (biometric authentication)
-- **Notifications**: Receive daily reminders to journalize your thoughts
-- **Multi-Language Support**: Available in English, Spanish, Catalan, German, French, Italian, Japanese, Korean, Portuguese, and Russian
+- **Smart Notifications**: 
+  - Receive daily reminders at 21:00 to encourage journaling
+  - Notifications only appear when your diary entry for the day is empty
+  - Automatically reschedules for the next day when you complete your entry
+  - Multi-language support with 11 languages
+  - Respects your timezone automatically
+- **Multi-Language Support**: Available in English, Spanish, Catalan, German, French, Italian, Japanese, Korean, Portuguese, Russian, and Chinese
 - **Customizable Theme**: Choose between different color themes to match your mood
 - **Offline-First**: All data is stored locally on your device for privacy
 - **Data Persistence**: Local SQLite database ensures your entries are never lost

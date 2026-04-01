@@ -374,6 +374,18 @@ abstract class AppLocalizations {
   /// **'Permiso de notificaciones denegado'**
   String get notifPermissionDenied;
 
+  /// No description provided for @notificationTest.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar notificación de prueba'**
+  String get notificationTest;
+
+  /// No description provided for @notificationTestSent.
+  ///
+  /// In es, this message translates to:
+  /// **'Notificación de prueba enviada'**
+  String get notificationTestSent;
+
   /// No description provided for @textPreview.
   ///
   /// In es, this message translates to:
@@ -463,6 +475,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Eventos totales registrados: {count}'**
   String historyTotalEvents(Object count);
+
+  /// No description provided for @diaryReminderMessage.
+  ///
+  /// In es, this message translates to:
+  /// **'No olvides rellenar tu diario'**
+  String get diaryReminderMessage;
 }
 
 class _AppLocalizationsDelegate

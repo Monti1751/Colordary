@@ -43,6 +43,8 @@
   "biometricReason": "通过身份验证保护您的私人空间",
   "authFailed": "身份验证失败",
   "notifPermissionDenied": "通知权限被拒绝",
+  "notificationTest": "发送测试通知",
+  "notificationTestSent": "测试通知已发送",
   "textPreview": "文本预览",
   "exportDate": "日期",
   "exportEmotion": "记录的感情",
@@ -57,5 +59,6 @@
   "closeMonthLabel": "结月",
   "historyTitle": "累计历史",
   "historyNoData": "尚无历史摘要。",
-  "historyTotalEvents": "累计记录事件：{count}"
+  "historyTotalEvents": "累计记录事件：{count}",
+  "diaryReminderMessage": "别忘了填写你的日记"
 }

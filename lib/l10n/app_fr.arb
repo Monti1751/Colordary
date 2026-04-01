@@ -43,6 +43,8 @@
   "biometricReason": "Protégez votre refuge quotidien en vérifiant votre identité",
   "authFailed": "Échec de l'authentification",
   "notifPermissionDenied": "Permission de notification refusée",
+  "notificationTest": "Envoyer une notification de test",
+  "notificationTestSent": "Notification de test envoyée",
   "textPreview": "Aperçu du texte",
   "exportDate": "Date",
   "exportEmotion": "Émotion enregistrée",
@@ -57,5 +59,6 @@
   "closeMonthLabel": "Fermer le mois",
   "historyTitle": "Historique cumulé",
   "historyNoData": "Pas encore de résumés historiques.",
-  "historyTotalEvents": "Total des événements enregistrés : {count}"
+  "historyTotalEvents": "Total des événements enregistrés : {count}",
+  "diaryReminderMessage": "N'oublie pas de remplir ton journal"
 }

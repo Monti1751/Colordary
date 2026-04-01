@@ -140,6 +140,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get notifPermissionDenied => 'Benachrichtigungsberechtigung abgelehnt';
 
   @override
+  String get notificationTest => 'Testbenachrichtigung senden';
+
+  @override
+  String get notificationTestSent => 'Testbenachrichtigung gesendet';
+
+  @override
   String get textPreview => 'Textvorschau';
 
   @override
@@ -187,4 +193,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String historyTotalEvents(Object count) {
     return 'Registrierte Ereignisse insgesamt: $count';
   }
+
+  @override
+  String get diaryReminderMessage =>
+      'Vergessen Sie nicht, Ihr Tagebuch zu führen';
 }

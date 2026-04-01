@@ -43,6 +43,8 @@
   "biometricReason": "본인 확인을 통해 일기를 보호합니다",
   "authFailed": "인증에 실패했습니다",
   "notifPermissionDenied": "알림 권한이 거부되었습니다",
+  "notificationTest": "테스트 알림 보내기",
+  "notificationTestSent": "테스트 알림이 전송되었습니다",
   "textPreview": "텍스트 미리보기",
   "exportDate": "날짜",
   "exportEmotion": "기록된 감정",
@@ -57,5 +59,6 @@
   "closeMonthLabel": "월 마감",
   "historyTitle": "누적 기록",
   "historyNoData": "아직 과거 요약이 없습니다.",
-  "historyTotalEvents": "총 등록된 이벤트 수: {count}"
+  "historyTotalEvents": "총 등록된 이벤트 수: {count}",
+  "diaryReminderMessage": "일기 쓰는 것을 잊지 마세요"
 }

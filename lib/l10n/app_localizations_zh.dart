@@ -138,6 +138,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get notifPermissionDenied => '通知权限被拒绝';
 
   @override
+  String get notificationTest => '发送测试通知';
+
+  @override
+  String get notificationTestSent => '测试通知已发送';
+
+  @override
   String get textPreview => '文本预览';
 
   @override
@@ -183,4 +189,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String historyTotalEvents(Object count) {
     return '累计记录事件：$count';
   }
+
+  @override
+  String get diaryReminderMessage => '别忘了填写你的日记';
 }

@@ -43,6 +43,8 @@
   "biometricReason": "Защитите свое личное пространство, подтвердив личность",
   "authFailed": "Ошибка аутентификации",
   "notifPermissionDenied": "В доступе к уведомлениям отказано",
+  "notificationTest": "Отправить тестовое уведомление",
+  "notificationTestSent": "Тестовое уведомление отправлено",
   "textPreview": "Предпросмотр текста",
   "exportDate": "Дата",
   "exportEmotion": "Зарегистрированная эмоция",
@@ -57,5 +59,6 @@
   "closeMonthLabel": "Закрыть месяц",
   "historyTitle": "Накопленная история",
   "historyNoData": "Исторических сводок пока нет.",
-  "historyTotalEvents": "Всего событий: {count}"
+  "historyTotalEvents": "Всего событий: {count}",
+  "diaryReminderMessage": "Не забудьте заполнить дневник"
 }

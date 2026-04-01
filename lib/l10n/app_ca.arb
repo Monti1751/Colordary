@@ -43,6 +43,8 @@
   "biometricReason": "Protegeix el teu refugi diari comprovant la teva identitat",
   "authFailed": "Autenticació fallida",
   "notifPermissionDenied": "Permís de notificacions denegat",
+  "notificationTest": "Enviar notificació de prova",
+  "notificationTestSent": "Notificació de prova enviada",
   "textPreview": "Previsualització del text",
   "exportDate": "Data",
   "exportEmotion": "Emoció registrada",
@@ -57,5 +59,6 @@
   "closeMonthLabel": "Tancar Mes",
   "historyTitle": "Historial Acumulat",
   "historyNoData": "No hi ha resums històrics encara.",
-  "historyTotalEvents": "Esdeveniments totals registrats: {count}"
+  "historyTotalEvents": "Esdeveniments totals registrats: {count}",
+  "diaryReminderMessage": "No oblidis omplir el teu diari"
 }

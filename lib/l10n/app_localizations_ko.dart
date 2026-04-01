@@ -138,6 +138,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get notifPermissionDenied => '알림 권한이 거부되었습니다';
 
   @override
+  String get notificationTest => '테스트 알림 보내기';
+
+  @override
+  String get notificationTestSent => '테스트 알림이 전송되었습니다';
+
+  @override
   String get textPreview => '텍스트 미리보기';
 
   @override
@@ -184,4 +190,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String historyTotalEvents(Object count) {
     return '총 등록된 이벤트 수: $count';
   }
+
+  @override
+  String get diaryReminderMessage => '일기 쓰는 것을 잊지 마세요';
 }

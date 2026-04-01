@@ -43,6 +43,8 @@
   "biometricReason": "本人確認を行って日記を保護します",
   "authFailed": "認証に失敗しました",
   "notifPermissionDenied": "通知権限が拒否されました",
+  "notificationTest": "テスト通知を送信",
+  "notificationTestSent": "テスト通知が送信されました",
   "textPreview": "テキストのプレビュー",
   "exportDate": "日付",
   "exportEmotion": "記録された感情",
@@ -57,5 +59,6 @@
   "closeMonthLabel": "月を閉じる",
   "historyTitle": "積算履歴",
   "historyNoData": "過去のサマリーはまだありません。",
-  "historyTotalEvents": "登録された合計イベント数: {count}"
+  "historyTotalEvents": "登録された合計イベント数: {count}",
+  "diaryReminderMessage": "日記を書き忘れないでください"
 }

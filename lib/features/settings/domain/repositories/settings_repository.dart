@@ -8,5 +8,6 @@ abstract class SettingsRepository {
   Future<void> saveLanguageCode(String code);
   
   bool getAuthEnabled();
+  bool getNotificationsEnabled();
   String? getLanguageCode();
 }

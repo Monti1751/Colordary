@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-04-01
+
+### Added
+- **Smart Daily Notifications**: Enhanced notification system that only sends reminders when the diary entry for the day is empty
+- **Multi-Language Notifications**: Notifications now display in the user's selected language (11 languages supported)
+- **Notification Auto-Reprogramming**: When users complete their diary entry, the notification automatically reschedules for the next day
+
+### Fixed
+- Fixed notification scheduling to respect user's timezone
+- Improved notification delivery reliability on Android 12+
+- Ensured notification messages are properly localized based on app language settings
+
+### Technical Improvements
+- Implemented `IsDiaryEmptyCallback` for flexible diary state checking
+- Added `setDiaryEmptyChecker()` method for dynamic callback registration
+- Integrated `scheduleDailyReminderIfEmpty()` method for intelligent notification dispatching
+- Added `sendTestNotification()` for testing notification functionality
+
 ## [1.0.0] - 2026-03-30
 
 ### Added

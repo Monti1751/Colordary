@@ -138,6 +138,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get notifPermissionDenied => '通知権限が拒否されました';
 
   @override
+  String get notificationTest => 'テスト通知を送信';
+
+  @override
+  String get notificationTestSent => 'テスト通知が送信されました';
+
+  @override
   String get textPreview => 'テキストのプレビュー';
 
   @override
@@ -183,4 +189,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String historyTotalEvents(Object count) {
     return '登録された合計イベント数: $count';
   }
+
+  @override
+  String get diaryReminderMessage => '日記を書き忘れないでください';
 }

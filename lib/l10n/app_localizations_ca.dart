@@ -139,6 +139,12 @@ class AppLocalizationsCa extends AppLocalizations {
   String get notifPermissionDenied => 'Permís de notificacions denegat';
 
   @override
+  String get notificationTest => 'Enviar notificació de prova';
+
+  @override
+  String get notificationTestSent => 'Notificació de prova enviada';
+
+  @override
   String get textPreview => 'Previsualització del text';
 
   @override
@@ -185,4 +191,7 @@ class AppLocalizationsCa extends AppLocalizations {
   String historyTotalEvents(Object count) {
     return 'Esdeveniments totals registrats: $count';
   }
+
+  @override
+  String get diaryReminderMessage => 'No oblidis omplir el teu diari';
 }

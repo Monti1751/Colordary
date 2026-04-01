@@ -140,6 +140,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get notifPermissionDenied => 'В доступе к уведомлениям отказано';
 
   @override
+  String get notificationTest => 'Отправить тестовое уведомление';
+
+  @override
+  String get notificationTestSent => 'Тестовое уведомление отправлено';
+
+  @override
   String get textPreview => 'Предпросмотр текста';
 
   @override
@@ -186,4 +192,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String historyTotalEvents(Object count) {
     return 'Всего событий: $count';
   }
+
+  @override
+  String get diaryReminderMessage => 'Не забудьте заполнить дневник';
 }

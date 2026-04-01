@@ -43,6 +43,8 @@
   "biometricReason": "Protect your daily sanctuary by verifying your identity",
   "authFailed": "Authentication failed",
   "notifPermissionDenied": "Notification permission denied",
+  "notificationTest": "Send test notification",
+  "notificationTestSent": "Test notification sent",
   "textPreview": "Text Preview",
   "exportDate": "Date",
   "exportEmotion": "Registered Emotion",
@@ -57,5 +59,6 @@
   "closeMonthLabel": "Close Month",
   "historyTitle": "Cumulative History",
   "historyNoData": "No historical summaries yet.",
-  "historyTotalEvents": "Total registered events: {count}"
+  "historyTotalEvents": "Total registered events: {count}",
+  "diaryReminderMessage": "Don't forget to fill your diary"
 }
