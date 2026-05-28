@@ -71,8 +71,9 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
         await _notificationService.scheduleDailyReminderIfEmpty(
           languageCode: locale.languageCode,
         );
+        debugPrint('✓ Notificación reprogramada con nuevo idioma');
       } catch (e) {
-        debugPrint('Error reprogramando notificación con nuevo idioma: $e');
+        debugPrint('✗ Error reprogramando notificación: $e');
       }
     }
   }
@@ -87,14 +88,13 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
       if (isEnabled) {
         final granted = await _notificationService.requestPermissions();
         if (granted) {
-          // Obtener el idioma actual para la notificación
-          final langCode = state.locale?.languageCode ?? _repository.getLanguageCode() ?? 'es';
-          
+          final langCode = state.locale?.languageCode ?? _repository.getLanguageCode();
           await _notificationService.scheduleDailyReminderIfEmpty(
             languageCode: langCode,
           );
           await _updateSettingsUseCase(isNotificationsEnabled: true);
           state = state.copyWith(isNotificationsEnabled: true);
+          debugPrint('✓ Notificaciones habilitadas y programadas a las 21:00');
         } else {
           if (context.mounted) {
             final loc = AppLocalizations.of(context)!;
@@ -105,12 +105,14 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
         await _notificationService.cancelDailyReminder();
         await _updateSettingsUseCase(isNotificationsEnabled: false);
         state = state.copyWith(isNotificationsEnabled: false);
+        debugPrint('✓ Notificaciones deshabilitadas');
       }
     } catch (e) {
       if (context.mounted) {
         final loc = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(loc.errorGeneral)));
       }
+      debugPrint('✗ Error al cambiar notificaciones: $e');
     }
   }
 

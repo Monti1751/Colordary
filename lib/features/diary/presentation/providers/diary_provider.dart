@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 import 'package:state_notifier/state_notifier.dart';
 import '../../../../core/enums/emotion.dart';
 import '../../../../core/services/notification_service.dart';
+import '../../../../core/services/notification_messages.dart';
 import '../../../../features/settings/data/repositories/settings_repository_impl.dart';
 import '../../domain/usecases/get_monthly_entries_usecase.dart';
 import '../../domain/usecases/save_daily_entry_usecase.dart';
@@ -42,26 +44,34 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     final entry = DailyEntry(id: id, date: date, content: text, emotion: emotion);
     final result = await _saveDailyEntryUseCase(entry);
 
+    bool savedToday = false;
+
     result.fold(
       (failure) => state = state.copyWith(status: DiaryStatus.error, errorMessage: failure.message),
       (_) {
         loadMonth(date.year, date.month);
-        
         final now = DateTime.now();
         if (date.year == now.year && date.month == now.month && date.day == now.day) {
-          // El usuario ha rellenado su diario HOY.
-          // Reprogramamos la notificación para mañana utilizando el método que verifica si está vacío
-          final languageCode = _settingsRepository.getLanguageCode();
-          
-          // Esto cancelará la notificación de hoy porque el diario ya tiene entrada,
-          // y la programará para mañana
-          _notificationService.scheduleDailyReminderIfEmpty(
-            languageCode: languageCode,
-            forceTomorrow: true,
-          );
+          savedToday = true;
         }
       },
     );
+
+    // Reprogramar notificación fuera del fold (requiere await)
+    if (savedToday && _settingsRepository.getNotificationsEnabled()) {
+      try {
+        final langCode = _settingsRepository.getLanguageCode() ?? 'es';
+        final title = NotificationMessages.getDiaryReminderMessage(langCode);
+        await _notificationService.scheduleDailyReminder(
+          title: title,
+          body: '¿Cómo te sientes hoy?',
+          forceTomorrow: true,
+        );
+        debugPrint('✓ Recordatorio reprogramado para mañana (diario rellenado hoy)');
+      } catch (e) {
+        debugPrint('✗ Error reprogramando notificación: $e');
+      }
+    }
   }
 
   void clearError() => state = state.copyWith(clearError: true, status: DiaryStatus.success);

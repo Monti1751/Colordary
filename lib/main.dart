@@ -31,26 +31,30 @@ void main() async {
   await notifService.init();
 
   // Crear un callback para verificar si el diario está vacío
-  // Este callback será usado por la notificación para enviarla solo si el día está vacío
   final diaryRepository = DiaryRepositoryImpl(dbHelper: dbHelper);
   notifService.setDiaryEmptyChecker(() async {
     final today = DateTime.now();
     final entry = await diaryRepository.getEntryByDate(today);
-    return entry == null; // Retorna true si está vacío (no hay entrada)
+    return entry == null;
   });
 
   // Solicitar permisos de notificación
   await notifService.requestPermissions();
 
-  // Programar la notificación diaria a las 21:00
-  // Se obtendrá el idioma desde SharedPreferences si está disponible
+  // Reprogramar alarma exacta si las notificaciones están habilitadas
+  // (AlarmManager no persiste tras reinicio, por eso se reprograma al abrir la app)
+  final isNotificationEnabled = prefs.getBool('pref_notification_enabled') ?? false;
   final languageCode = prefs.getString('pref_language_code');
-  try {
-    await notifService.scheduleDailyReminderIfEmpty(
-      languageCode: languageCode ?? 'es',
-    );
-  } catch (e) {
-    debugPrint('Error programando notificación diaria: $e');
+
+  if (isNotificationEnabled) {
+    try {
+      await notifService.scheduleDailyReminderIfEmpty(
+        languageCode: languageCode,
+      );
+      debugPrint('✓ Alarma diaria reprogramada al iniciar la app');
+    } catch (e) {
+      debugPrint('Error programando alarma diaria: $e');
+    }
   }
 
   runApp(
@@ -70,7 +74,6 @@ class CozyDiaryApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settingsState = ref.watch(settingsNotifierProvider);
-    final settingsNotifier = ref.read(settingsNotifierProvider.notifier);
 
     return MaterialApp(
       title: AppStrings.appName,

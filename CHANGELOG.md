@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-04-01
+
+### Fixed
+- **Background Notifications**: Upgraded WorkManager from 0.5.2 to 0.9.0 to fix background notification scheduling
+- **Critical**: Notifications now work reliably even when the app is closed or running in background
+- Fixed Kotlin compilation errors related to deprecated WorkManager APIs
+- Improved notification reliability on Android 14+ devices
+
+### Technical Improvements
+- Migrated notification scheduling from `zonedSchedule` (foreground-only) to WorkManager (background-persistent)
+- Implemented proper callback dispatcher for background task execution
+- Updated notification payload handling for compatibility with latest Android requirements
+- Optimized WorkManager constraints for battery and device idle states
+
 ## [1.0.1] - 2026-04-01
 
 ### Added
