@@ -52,13 +52,24 @@ class NotificationService {
   Future<bool> requestPermissions() async {
     final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
         _notificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
-    
-    // Request notification permission
+
+    // Pedir permiso de notificación (Android 13+)
     final bool? granted = await androidImplementation?.requestNotificationsPermission();
-    // Also request exact alarms permission for precise scheduling
-    final bool? exactAlarm = await androidImplementation?.requestExactAlarmsPermission();
-    
-    return (granted ?? false) && (exactAlarm ?? true); // exactAlarm can be null on older Android
+    if (granted != true) {
+      debugPrint('⚠️ Permiso de notificación denegado');
+      return false;
+    }
+
+    // Comprobar si ya tenemos permiso para alarmas exactas
+    final bool? canSchedule = await androidImplementation?.canScheduleExactNotifications();
+    if (canSchedule != true) {
+      // Abrir ajustes del sistema (no bloquea - el usuario lo concede manualmente)
+      // No retornamos false: la alarma se programa igualmente con exactAllowWhileIdle
+      debugPrint('⚠️ Permiso de alarma exacta no concedido – solicitando...');
+      await androidImplementation?.requestExactAlarmsPermission();
+    }
+
+    return true; // El permiso de notificación es suficiente para continuar
   }
 
   Future<void> scheduleDailyReminder({
@@ -79,7 +90,7 @@ class NotificationService {
         0,
       );
       
-      // If the time has already passed today or forceTomorrow is true, schedule for tomorrow
+      // Si la hora ya pasó hoy o forceTomorrow es true, programar para mañana
       if (scheduledDate.isBefore(now) || forceTomorrow) {
         scheduledDate = scheduledDate.add(const Duration(days: 1));
       }
@@ -99,32 +110,20 @@ class NotificationService {
         android: androidDetails,
       );
 
-      // Try exact alarm first (for Android 12+)
-      try {
-        await _notificationsPlugin.zonedSchedule(
-          id: dailyReminderId,
-          title: title,
-          body: body,
-          scheduledDate: scheduledDate,
-          notificationDetails: notificationDetails,
-          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-          matchDateTimeComponents: DateTimeComponents.time, // Repeats daily at this time
-        );
-      } catch (e) {
-        // Fallback to inexact if exact fails
-        await _notificationsPlugin.zonedSchedule(
-          id: dailyReminderId,
-          title: title,
-          body: body,
-          scheduledDate: scheduledDate,
-          notificationDetails: notificationDetails,
-          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-          matchDateTimeComponents: DateTimeComponents.time,
-        );
-      }
+      // Programar con matchDateTimeComponents.time para que se repita diariamente a esa hora
+      await _notificationsPlugin.zonedSchedule(
+        id: dailyReminderId,
+        title: title,
+        body: body,
+        scheduledDate: scheduledDate,
+        notificationDetails: notificationDetails,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+      
+      debugPrint('✓ Notificación programada para las 21:00 (se repetirá diariamente)');
     } catch (e) {
-      // Log error for debugging
-      debugPrint('Error scheduling daily reminder: $e');
+      debugPrint('✗ Error scheduling daily reminder: $e');
       rethrow;
     }
   }
@@ -138,36 +137,43 @@ class NotificationService {
     try {
       // Verificar si el callback está configurado
       if (_isDiaryEmptyCallback == null) {
-        debugPrint('Warning: setDiaryEmptyChecker no ha sido configurado. Notificación no será enviada.');
+        debugPrint('⚠️  setDiaryEmptyChecker no configurado - notificación no se enviará');
         return;
       }
 
       // Verificar si el diario está vacío
       final isDiaryEmpty = await _isDiaryEmptyCallback!();
       
-      if (!isDiaryEmpty) {
-        // El diario ya tiene entrada, cancelar la notificación
-        await cancelDailyReminder();
-        return;
-      }
-
-      // El diario está vacío, programar la notificación
+      // Obtener el mensaje de notificación
       final title = NotificationMessages.getDiaryReminderMessage(languageCode);
       final body = '¿Cómo te sientes hoy?';
       
-      await scheduleDailyReminder(
-        title: title,
-        body: body,
-        forceTomorrow: forceTomorrow,
-      );
+      if (isDiaryEmpty) {
+        // El diario está vacío, programar la notificación
+        debugPrint('📝 Diario vacío - programando notificación...');
+        await scheduleDailyReminder(
+          title: title,
+          body: body,
+          forceTomorrow: forceTomorrow,
+        );
+      } else {
+        // El diario ya tiene entrada, programar para mañana para que no suene hoy pero sí mañana
+        debugPrint('✓ Diario rellenado hoy - programando notificación para mañana...');
+        await scheduleDailyReminder(
+          title: title,
+          body: body,
+          forceTomorrow: true,
+        );
+      }
     } catch (e) {
-      debugPrint('Error scheduling daily reminder if empty: $e');
+      debugPrint('✗ Error en scheduleDailyReminderIfEmpty: $e');
       rethrow;
     }
   }
 
   Future<void> cancelDailyReminder() async {
     try {
+      // flutter_local_notifications v21+ usa parámetro nombrado id:
       await _notificationsPlugin.cancel(id: dailyReminderId);
     } catch (e) {
       debugPrint('Error canceling daily reminder: $e');
@@ -205,6 +211,27 @@ class NotificationService {
       debugPrint('Notificación de prueba enviada');
     } catch (e) {
       debugPrint('Error sending test notification: $e');
+      rethrow;
+    }
+  }
+
+  /// Método público para mostrar notificaciones desde background (WorkManager)
+  Future<void> show({
+    required int id,
+    required String title,
+    required String body,
+    required NotificationDetails notificationDetails,
+  }) async {
+    try {
+      await _notificationsPlugin.show(
+        id: id,
+        title: title,
+        body: body,
+        notificationDetails: notificationDetails,
+      );
+      debugPrint('✓ Notificación mostrada: "$title"');
+    } catch (e) {
+      debugPrint('❌ Error mostrando notificación: $e');
       rethrow;
     }
   }

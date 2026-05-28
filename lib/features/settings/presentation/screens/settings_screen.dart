@@ -328,7 +328,7 @@ class SettingsScreen extends ConsumerWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: AppDimensions.paddingS),
-                  Text("Versión 1.0.0", style: theme.textTheme.bodySmall),
+                  Text("Versión 1.0.4", style: theme.textTheme.bodySmall),
                 ],
               ),
             ),
